@@ -1,0 +1,33 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Products - Earth Care Enterprise</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <h1>Products</h1>
+  <a href="index.html">Home</a>
+</header>
+<div id="product-list"></div>
+<script>
+fetch('products.json')
+.then(r=>r.json())
+.then(data=>{
+  const container = document.getElementById('product-list');
+  const hash = decodeURIComponent(location.hash.slice(1));
+  const products = data[hash] || [];
+  container.innerHTML = `<h2>${hash}</h2>` + products.map(p=>`
+    <div>
+      <h3>${p.name}</h3>
+      <p>${p.desc}</p>
+      <p><b>₹${p.price}</b></p>
+      <a href="https://wa.me/918849120963?text=I want to order: ${encodeURIComponent(p.name)}">Order on WhatsApp</a>
+    </div>
+  `).join('');
+});
+</script>
+</body>
+</html>
